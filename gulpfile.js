@@ -17,6 +17,12 @@ gulp.task('default', ['clean'], function() {
     gulp.start('index');
 });
 
+gulp.task('scripts', [], function() {
+    gulp.src('app/src/scripts/*.js')
+      .pipe(gulp.dest('app/build/scripts'))
+      .pipe(notify('Scripts was updated'));
+});
+
 gulp.task('copylibs', [], function() {
     gulp.src('bower_components/angularjs/angular.min.js')
       .pipe(gulp.dest('app/build/components/angular'));
@@ -28,4 +34,5 @@ gulp.task('copylibs', [], function() {
 
 gulp.task('watch', function() {
     gulp.watch("app/src/index.html", ['index']);
+    gulp.watch('app/src/scripts/*.js', ['scripts']);
 });

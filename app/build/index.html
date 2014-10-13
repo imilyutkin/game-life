@@ -5,8 +5,17 @@
     <link rel="stylesheet" href="components/pure/pure-min.css">
     <script src="components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/app.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body>
-
+<body ng-app="conwayLifeApp">
+    <div ng-controller="RenderTable">
+        <table>
+            <tr ng-repeat="row in matrix">
+                <td ng-repeat="i in row" style="border: black 1px solid;">
+                {{i}}
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
