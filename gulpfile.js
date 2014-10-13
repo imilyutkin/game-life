@@ -4,7 +4,6 @@ var gulp = require('gulp'),
 
 gulp.task('clean', [], function() {
     del('app/build/index.html');
-    notify('Clean completed');
 });
 
 gulp.task('index', [], function() {
@@ -14,5 +13,15 @@ gulp.task('index', [], function() {
 });
 
 gulp.task('default', ['clean'], function() {
+    gulp.start('copylibs');
     gulp.start('index');
+});
+
+gulp.task('copylibs', [], function() {
+    gulp.src('bower_components/angularjs/angular.min.js')
+      .pipe(gulp.dest('app/build/components/angular'));
+    gulp.src('bower_components/jquery/dist/jquery.min.js')
+      .pipe(gulp.dest('app/build/components/jquery'));
+    gulp.src('bower_components/pure/pure-min.css')
+      .pipe(gulp.dest('app/build/components/pure'));
 });
