@@ -25,3 +25,7 @@ gulp.task('copylibs', [], function() {
     gulp.src('bower_components/pure/pure-min.css')
       .pipe(gulp.dest('app/build/components/pure'));
 });
+
+gulp.task('watch', function() {
+    gulp.watch("app/src/index.html", ['index']);
+});
