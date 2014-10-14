@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     del = require('del'),
-    notify = require('gulp-notify');
+    notify = require('gulp-notify'),
+    concat = require('gulp-concat'),
+    typescript = require('gulp-typescript');
 
 gulp.task('clean', [], function() {
     del('app/build/index.html');
