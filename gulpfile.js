@@ -6,6 +6,7 @@ var gulp = require('gulp'),
 
 gulp.task('clean', [], function() {
     del('app/build/index.html');
+    del('app/build/scripts/Application.js');
 });
 
 gulp.task('index', [], function() {
@@ -17,10 +18,13 @@ gulp.task('index', [], function() {
 gulp.task('default', ['clean'], function() {
     gulp.start('copylibs');
     gulp.start('index');
+    gulp.start('scripts');
 });
 
 gulp.task('scripts', [], function() {
-    gulp.src('app/src/scripts/*.js')
+    gulp.src(['app/src/scripts/controllers/*.ts', 'app/src/scripts/*.ts', ])
+      .pipe(concat('Application.ts'))
+      .pipe(typescript())
       .pipe(gulp.dest('app/build/scripts'))
       .pipe(notify('Scripts was updated'));
 });
@@ -36,5 +40,5 @@ gulp.task('copylibs', [], function() {
 
 gulp.task('watch', function() {
     gulp.watch("app/src/index.html", ['index']);
-    gulp.watch('app/src/scripts/*.js', ['scripts']);
+    gulp.watch(['app/src/scripts/controllers/*.ts', 'app/src/scripts/*.ts'], ['scripts']);
 });
