@@ -2,6 +2,7 @@ var gulp = require('gulp'),
     del = require('del'),
     notify = require('gulp-notify'),
     concat = require('gulp-concat'),
+    express = require('express'),
     typescript = require('gulp-typescript');
 
 gulp.task('clean', [], function() {
