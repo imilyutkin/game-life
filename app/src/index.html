@@ -12,7 +12,7 @@
         <table>
             <tr ng-repeat="row in vm.matrix">
                 <td ng-repeat="i in row" style="border: black 1px solid;">
-                {{i}}
+                {{i.getState()}}
                 </td>
             </tr>
         </table>

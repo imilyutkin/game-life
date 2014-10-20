@@ -10,15 +10,16 @@ module gameLife {
         constructor($scope){
             $scope.vm = this;
 
-            var matrix = [];
-            var size = 46;
+            var size:number = 45;
+            var matrix:Cell[][] = new Array<Cell[]>(size);
+
             for(var i = 0; i < size; i++) {
-                matrix[i] = new Array(size);
+                matrix[i] = new Array<Cell>(45);
             }
 
             for(var i = 0; i < size; i++) {
                 for(var j = 0; j < size; j++) {
-                    matrix[i][j] = i + j;
+                    matrix[i][j] = new Cell(i + j);
                 }
             }
 
