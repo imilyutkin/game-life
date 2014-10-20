@@ -2,12 +2,12 @@ module gameLife {
 	'use strict';
 
 	export class Cell {
-		private state: boolean;
+		private isAlive: boolean;
 
 		private styleClass: string = "dead";
 
-		constructor(state: boolean) {
-			this.state = state;
+		constructor() {
+			this.isAlive = false;
 		}
 
 		public getClass() : string {
@@ -15,15 +15,17 @@ module gameLife {
 		}
 
 		public getState() : boolean {
-			return this.state;
+			return this.isAlive;
 		}
 
-		public switchClass() {
-			if(this.styleClass == "dead"){
+		public switchState() {
+			this.isAlive = !this.isAlive;
+			if(this.isAlive) {
 				this.styleClass = "alive";
 			} else {
 				this.styleClass = "dead";
 			}
+
 		}
 	}
 }

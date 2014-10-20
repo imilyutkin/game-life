@@ -11,7 +11,7 @@ var gameLife;
             }
             for (var i = 0; i < size; i++) {
                 for (var j = 0; j < size; j++) {
-                    matrix[i][j] = new gameLife.Cell((i + j) < 35);
+                    matrix[i][j] = new gameLife.Cell();
                 }
             }
             $scope.vm.matrix = matrix;
@@ -32,18 +32,19 @@ var gameLife;
 (function (gameLife) {
     'use strict';
     var Cell = (function () {
-        function Cell(state) {
+        function Cell() {
             this.styleClass = "dead";
-            this.state = state;
+            this.isAlive = false;
         }
         Cell.prototype.getClass = function () {
             return this.styleClass;
         };
         Cell.prototype.getState = function () {
-            return this.state;
+            return this.isAlive;
         };
-        Cell.prototype.switchClass = function () {
-            if (this.styleClass == "dead") {
+        Cell.prototype.switchState = function () {
+            this.isAlive = !this.isAlive;
+            if (this.isAlive) {
                 this.styleClass = "alive";
             }
             else {

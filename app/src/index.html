@@ -12,8 +12,7 @@
     <div ng-controller="renderTable">
         <table>
             <tr ng-repeat="row in vm.matrix">
-                <td ng-repeat="i in row" class="{{i.getClass()}}" ng-click="i.switchClass()" style="border: black 1px solid;">
-                {{i.getState()}}
+                <td ng-repeat="cell in row" class="cell {{cell.getClass()}}" ng-click="cell.switchState()">
                 </td>
             </tr>
         </table>
