@@ -23,7 +23,7 @@ gulp.task('default', ['clean'], function() {
 });
 
 gulp.task('scripts', [], function() {
-    gulp.src(['app/src/scripts/controllers/*.ts', 'app/src/scripts/*.ts', ])
+    gulp.src(['app/src/scripts/controllers/*.ts', 'app/src/scripts/*.ts', 'app/src/scripts/models/*.ts'])
       .pipe(concat('Application.ts'))
       .pipe(typescript())
       .pipe(gulp.dest('app/build/scripts'))
@@ -41,5 +41,5 @@ gulp.task('copylibs', [], function() {
 
 gulp.task('watch', function() {
     gulp.watch("app/src/index.html", ['index']);
-    gulp.watch(['app/src/scripts/controllers/*.ts', 'app/src/scripts/*.ts'], ['scripts']);
+    gulp.watch(['app/src/scripts/controllers/*.ts', 'app/src/scripts/models/*.ts', 'app/src/scripts/*.ts'], ['scripts']);
 });
