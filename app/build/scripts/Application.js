@@ -11,7 +11,7 @@ var gameLife;
             }
             for (var i = 0; i < size; i++) {
                 for (var j = 0; j < size; j++) {
-                    matrix[i][j] = new gameLife.Cell(i + j);
+                    matrix[i][j] = new gameLife.Cell((i + j) < 35);
                 }
             }
             $scope.vm.matrix = matrix;
@@ -33,10 +33,17 @@ var gameLife;
     'use strict';
     var Cell = (function () {
         function Cell(state) {
+            this.styleClass = "hello";
             this.state = state;
         }
+        Cell.prototype.getClass = function () {
+            return this.styleClass;
+        };
         Cell.prototype.getState = function () {
             return this.state;
+        };
+        Cell.prototype.switchClass = function () {
+            this.styleClass = "bye";
         };
         return Cell;
     })();
