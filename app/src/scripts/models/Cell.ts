@@ -4,7 +4,7 @@ module gameLife {
 	export class Cell {
 		private state: boolean;
 
-		private styleClass: string = "hello";
+		private styleClass: string = "dead";
 
 		constructor(state: boolean) {
 			this.state = state;
@@ -19,7 +19,11 @@ module gameLife {
 		}
 
 		public switchClass() {
-			this.styleClass = "bye";
+			if(this.styleClass == "dead"){
+				this.styleClass = "alive";
+			} else {
+				this.styleClass = "dead";
+			}
 		}
 	}
 }

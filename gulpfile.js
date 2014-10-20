@@ -20,6 +20,7 @@ gulp.task('default', ['clean'], function() {
     gulp.start('copylibs');
     gulp.start('index');
     gulp.start('scripts');
+    gulp.start('styles');
 });
 
 gulp.task('scripts', [], function() {
@@ -39,7 +40,13 @@ gulp.task('copylibs', [], function() {
       .pipe(gulp.dest('app/build/components/pure'));
 });
 
+gulp.task('styles', [], function() {
+    gulp.src('app/src/styles/*.css')
+      .pipe(gulp.dest('app/build/styles'));
+});
+
 gulp.task('watch', function() {
     gulp.watch("app/src/index.html", ['index']);
+    gulp.watch("app/src/styles/*.css", ['styles']);
     gulp.watch(['app/src/scripts/controllers/*.ts', 'app/src/scripts/models/*.ts', 'app/src/scripts/*.ts'], ['scripts']);
 });

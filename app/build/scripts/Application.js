@@ -33,7 +33,7 @@ var gameLife;
     'use strict';
     var Cell = (function () {
         function Cell(state) {
-            this.styleClass = "hello";
+            this.styleClass = "dead";
             this.state = state;
         }
         Cell.prototype.getClass = function () {
@@ -43,7 +43,12 @@ var gameLife;
             return this.state;
         };
         Cell.prototype.switchClass = function () {
-            this.styleClass = "bye";
+            if (this.styleClass == "dead") {
+                this.styleClass = "alive";
+            }
+            else {
+                this.styleClass = "dead";
+            }
         };
         return Cell;
     })();
