@@ -7,8 +7,12 @@ module gameLife {
             '$scope'
         ];
 
-        constructor($scope){
+        private scope: ng.IScope;
+
+        constructor($scope: ng.IScope){
             $scope.vm = this;
+
+            this.scope = $scope;
 
             var size:number = 45;
             var matrix:Cell[][] = new Array<Cell[]>(size);
@@ -26,5 +30,8 @@ module gameLife {
             $scope.vm.matrix = matrix;
         }
 
+        public updateField() {
+            this.scope.vm.matrix = null;
+        }
     }
 }
