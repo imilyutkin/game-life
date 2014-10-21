@@ -3,11 +3,13 @@ module gameLife {
 
     export class Cell {
         private isAlive: boolean;
+        private nextState: boolean;
 
         private styleClass: string = "dead";
 
         constructor() {
             this.isAlive = false;
+            this.nextState = true;
         }
 
         public getClass() : string {
@@ -19,7 +21,8 @@ module gameLife {
         }
 
         public switchState() {
-            this.isAlive = !this.isAlive;
+            this.isAlive = this.nextState;
+            this.nextState = !this.nextState;
             if(this.isAlive) {
                 this.styleClass = "alive";
             } else {
@@ -36,7 +39,15 @@ module gameLife {
                     liveCellsCount += 1;
                 }
             }
-            this.isAlive = liveCellsCount == 2;
+            // if(liveCellsCount == 2 && !this.isAlive) {
+            //     this.switchState();
+            // }
+            if(this.isAlive){
+                this.nextState = liveCellsCount == 3 || liveCellsCount == 2;
+            } else {
+                this.nextState = liveCellsCount == 3;
+            }
+            
         }
     }
 }

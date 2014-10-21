@@ -8,11 +8,11 @@ var gameLife;
 
             this.scope = $scope;
 
-            var size = 45;
+            var size = 40;
             var matrix = new Array(size);
 
             for (var i = 0; i < size; i++) {
-                matrix[i] = new Array(45);
+                matrix[i] = new Array(size);
             }
 
             for (var i = 0; i < size; i++) {
@@ -24,7 +24,30 @@ var gameLife;
             $scope.vm.matrix = matrix;
         }
         RenderTable.prototype.updateField = function () {
-            this.scope.vm.matrix = null;
+            var count = this.scope.vm.matrix.length;
+            var matrix = this.scope.vm.matrix;
+            for (var i = 0; i < count; i++) {
+                for (var j = 0; j < count; j++) {
+                    if ((i > 0 && j > 0) && (i < count - 1 && j < count - 1)) {
+                        var cells = new Array();
+                        cells.push(matrix[i - 1][j - 1]);
+                        cells.push(matrix[i][j - 1]);
+                        cells.push(matrix[i + 1][j - 1]);
+                        cells.push(matrix[i - 1][j]);
+                        cells.push(matrix[i + 1][j]);
+                        cells.push(matrix[i - 1][j + 1]);
+                        cells.push(matrix[i][j + 1]);
+                        cells.push(matrix[i + 1][j + 1]);
+                        matrix[i][j].updateState(cells);
+                    }
+                }
+            }
+
+            for (var i = 0; i < count; i++) {
+                for (var j = 0; j < count; j++) {
+                    matrix[i][j].switchState();
+                }
+            }
         };
         RenderTable.$inject = [
             '$scope'
@@ -48,6 +71,7 @@ var gameLife;
         function Cell() {
             this.styleClass = "dead";
             this.isAlive = false;
+            this.nextState = true;
         }
         Cell.prototype.getClass = function () {
             return this.styleClass;
@@ -58,7 +82,8 @@ var gameLife;
         };
 
         Cell.prototype.switchState = function () {
-            this.isAlive = !this.isAlive;
+            this.isAlive = this.nextState;
+            this.nextState = !this.nextState;
             if (this.isAlive) {
                 this.styleClass = "alive";
             } else {
@@ -75,7 +100,15 @@ var gameLife;
                     liveCellsCount += 1;
                 }
             }
-            this.isAlive = liveCellsCount == 2;
+
+            // if(liveCellsCount == 2 && !this.isAlive) {
+            //     this.switchState();
+            // }
+            if (this.isAlive) {
+                this.nextState = liveCellsCount == 3 || liveCellsCount == 2;
+            } else {
+                this.nextState = liveCellsCount == 3;
+            }
         };
         return Cell;
     })();
