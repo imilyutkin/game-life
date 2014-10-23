@@ -3,10 +3,11 @@ var gameLife;
     'use strict';
 
     var RenderTable = (function () {
-        function RenderTable($scope) {
+        function RenderTable($scope, $interval) {
             $scope.vm = this;
 
             this.scope = $scope;
+            this.interval = $interval;
 
             this.fieldSize = 40;
             var matrix = new Array(this.fieldSize);
@@ -20,9 +21,22 @@ var gameLife;
                     matrix[i][j] = new gameLife.Cell();
                 }
             }
-
+            this.stop = undefined;
+            this.generation = 0;
             $scope.vm.matrix = matrix;
         }
+        RenderTable.prototype.start = function () {
+            var _this = this;
+            if (this.stop == undefined) {
+                this.stop = this.interval(function () {
+                    return _this.updateField();
+                }, 100);
+            } else {
+                this.interval.cancel(this.stop);
+                this.stop = undefined;
+            }
+        };
+
         RenderTable.prototype.updateField = function () {
             var matrix = this.scope.vm.matrix;
             for (var i = 0; i < this.fieldSize; i++) {
@@ -38,6 +52,7 @@ var gameLife;
                     matrix[i][j].switchState();
                 }
             }
+            this.generation++;
         };
 
         RenderTable.prototype.getCells = function (matrix, i, j) {
@@ -81,7 +96,8 @@ var gameLife;
             return matrix[i][j];
         };
         RenderTable.$inject = [
-            '$scope'
+            '$scope',
+            '$interval'
         ];
         return RenderTable;
     })();

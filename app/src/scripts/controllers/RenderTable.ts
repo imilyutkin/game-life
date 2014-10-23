@@ -4,17 +4,25 @@ module gameLife {
     export class RenderTable {
 
         public static $inject = [
-            '$scope'
+            '$scope',
+            '$interval'
         ];
 
         private scope: ng.IScope;
 
         private fieldSize: number;
+        public generation: number;
 
-        constructor($scope: ng.IScope){
+        private interval;
+
+        private timer;
+        private stop;
+
+        constructor($scope: ng.IScope, $interval){
             $scope.vm = this;
 
             this.scope = $scope;
+            this.interval = $interval;
 
             this.fieldSize = 40;
             var matrix:Cell[][] = new Array<Cell[]>(this.fieldSize);
@@ -28,8 +36,19 @@ module gameLife {
                     matrix[i][j] = new Cell();
                 }
             }
-
+            this.stop = undefined;
+            this.generation = 0;
             $scope.vm.matrix = matrix;
+        }
+
+        public start() {
+            
+            if(this.stop == undefined) {
+                this.stop = this.interval(() => this.updateField(), 100);
+            } else {
+                this.interval.cancel(this.stop);
+                this.stop = undefined;
+            }
         }
 
         public updateField() {
@@ -47,6 +66,7 @@ module gameLife {
                     matrix[i][j].switchState();
                 }
             }
+            this.generation++;
         }
 
         private getCells(matrix: Cell[][], i: number, j: number): Cell[] {
