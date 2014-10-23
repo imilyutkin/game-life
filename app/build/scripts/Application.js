@@ -8,15 +8,15 @@ var gameLife;
 
             this.scope = $scope;
 
-            var size = 40;
-            var matrix = new Array(size);
+            this.fieldSize = 40;
+            var matrix = new Array(this.fieldSize);
 
-            for (var i = 0; i < size; i++) {
-                matrix[i] = new Array(size);
+            for (var i = 0; i < this.fieldSize; i++) {
+                matrix[i] = new Array(this.fieldSize);
             }
 
-            for (var i = 0; i < size; i++) {
-                for (var j = 0; j < size; j++) {
+            for (var i = 0; i < this.fieldSize; i++) {
+                for (var j = 0; j < this.fieldSize; j++) {
                     matrix[i][j] = new gameLife.Cell();
                 }
             }
@@ -24,30 +24,61 @@ var gameLife;
             $scope.vm.matrix = matrix;
         }
         RenderTable.prototype.updateField = function () {
-            var count = this.scope.vm.matrix.length;
             var matrix = this.scope.vm.matrix;
-            for (var i = 0; i < count; i++) {
-                for (var j = 0; j < count; j++) {
-                    if ((i > 0 && j > 0) && (i < count - 1 && j < count - 1)) {
-                        var cells = new Array();
-                        cells.push(matrix[i - 1][j - 1]);
-                        cells.push(matrix[i][j - 1]);
-                        cells.push(matrix[i + 1][j - 1]);
-                        cells.push(matrix[i - 1][j]);
-                        cells.push(matrix[i + 1][j]);
-                        cells.push(matrix[i - 1][j + 1]);
-                        cells.push(matrix[i][j + 1]);
-                        cells.push(matrix[i + 1][j + 1]);
-                        matrix[i][j].updateState(cells);
-                    }
+            for (var i = 0; i < this.fieldSize; i++) {
+                for (var j = 0; j < this.fieldSize; j++) {
+                    var cells;
+                    cells = this.getCells(matrix, i, j);
+                    matrix[i][j].updateState(cells);
                 }
             }
 
-            for (var i = 0; i < count; i++) {
-                for (var j = 0; j < count; j++) {
+            for (var i = 0; i < this.fieldSize; i++) {
+                for (var j = 0; j < this.fieldSize; j++) {
                     matrix[i][j].switchState();
                 }
             }
+        };
+
+        RenderTable.prototype.getCells = function (matrix, i, j) {
+            var cells = new Array();
+            if (i <= 0) {
+                i += this.fieldSize;
+            }
+            if (i >= this.fieldSize) {
+                i -= this.fieldSize;
+            }
+            if (j <= 0) {
+                j += this.fieldSize;
+            }
+            if (j >= this.fieldSize) {
+                j -= this.fieldSize;
+            }
+            cells.push(this.getCell(matrix, i - 1, j - 1));
+            cells.push(this.getCell(matrix, i, j - 1));
+            cells.push(this.getCell(matrix, i + 1, j - 1));
+            cells.push(this.getCell(matrix, i - 1, j));
+            cells.push(this.getCell(matrix, i + 1, j));
+            cells.push(this.getCell(matrix, i - 1, j + 1));
+            cells.push(this.getCell(matrix, i, j + 1));
+            cells.push(this.getCell(matrix, i + 1, j + 1));
+            return cells;
+        };
+
+        RenderTable.prototype.getCell = function (matrix, i, j) {
+            if (i <= 0) {
+                i += this.fieldSize;
+            }
+            if (i >= this.fieldSize) {
+                i -= this.fieldSize;
+            }
+            if (j <= 0) {
+                j += this.fieldSize;
+            }
+            if (j >= this.fieldSize) {
+                j -= this.fieldSize;
+            }
+            return matrix[i][j];
         };
         RenderTable.$inject = [
             '$scope'
@@ -100,10 +131,6 @@ var gameLife;
                     liveCellsCount += 1;
                 }
             }
-
-            // if(liveCellsCount == 2 && !this.isAlive) {
-            //     this.switchState();
-            // }
             if (this.isAlive) {
                 this.nextState = liveCellsCount == 3 || liveCellsCount == 2;
             } else {

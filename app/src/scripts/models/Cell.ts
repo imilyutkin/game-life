@@ -39,9 +39,6 @@ module gameLife {
                     liveCellsCount += 1;
                 }
             }
-            // if(liveCellsCount == 2 && !this.isAlive) {
-            //     this.switchState();
-            // }
             if(this.isAlive){
                 this.nextState = liveCellsCount == 3 || liveCellsCount == 2;
             } else {
