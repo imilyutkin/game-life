@@ -44,7 +44,7 @@ module gameLife {
         public start() {
             
             if(this.stop == undefined) {
-                this.stop = this.interval(() => this.updateField(), 100);
+                this.stop = this.interval(() => this.updateField(), 250);
             } else {
                 this.interval.cancel(this.stop);
                 this.stop = undefined;

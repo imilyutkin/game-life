@@ -30,7 +30,7 @@ var gameLife;
             if (this.stop == undefined) {
                 this.stop = this.interval(function () {
                     return _this.updateField();
-                }, 100);
+                }, 250);
             } else {
                 this.interval.cancel(this.stop);
                 this.stop = undefined;
