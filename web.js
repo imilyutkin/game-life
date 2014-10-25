@@ -1,13 +1,11 @@
 var express = require('express')
 var path = require('path')
-var app = express()
+var app = express();
 
-
-app.set('view engine', 'ejs')
-app.set('app/build', path.join(__dirname, 'app/build'))
+app.use(express.static(__dirname + '/app/build'))
 
 app.get('/', function (req, res) {
-  app.render("index")
+  res.send('Content')
 })
 
 
