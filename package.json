@@ -1,5 +1,5 @@
 {
-  "name": "conway game of life",
+  "name": "conway-game-of-life",
   "version": "0.0.1",
   "description": "A sample Node.js app using Express 4",
   "main": "web.js",
